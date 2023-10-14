@@ -1,5 +1,6 @@
 package devandroid.zeglan.movies.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -9,8 +10,10 @@ import devandroid.zeglan.movies.databinding.ActivityMainBinding
 import devandroid.zeglan.movies.server.model.GenreListModel
 import devandroid.zeglan.movies.server.repository.local.GenreListMock
 import devandroid.zeglan.movies.view.adapter.MainAdapter
+import devandroid.zeglan.movies.view.listener.OnMovieListener
 import devandroid.zeglan.movies.viewmodel.MainViewModel
 import java.lang.Exception
+import java.util.Objects
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,6 +35,22 @@ class MainActivity : AppCompatActivity() {
 
         binding.mainRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
         binding.mainRecyclerView.adapter = mainAdapter
+
+
+        val listener = object : OnMovieListener {
+            override fun onClick(movieId: Int) {
+
+                val screen = Intent(applicationContext, MovieDetailsActivity::class.java)
+
+                val bundle = Bundle()
+                bundle.putInt("movieId", movieId)
+                screen.putExtras(bundle)
+
+                startActivity(screen)
+            }
+        }
+
+        mainAdapter.attachListener(listener)
 
 
         getFilteredMovies(GenreListMock.list)

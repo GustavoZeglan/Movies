@@ -1,13 +1,14 @@
 package devandroid.zeglan.movies.view.viewholder
 
 import android.content.Context
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import devandroid.zeglan.movies.databinding.ResMovieBinding
 import devandroid.zeglan.movies.server.model.MovieListModel
+import devandroid.zeglan.movies.view.listener.OnMovieListener
 
-class MovieViewHolder(private val context: Context,private val binding: ResMovieBinding) : ViewHolder(binding.root) {
+class MovieViewHolder(private val context: Context,private val binding: ResMovieBinding, val listener: OnMovieListener)
+    : ViewHolder(binding.root) {
 
     fun bindData(movie: MovieListModel.MovieModel) {
         val imageView = binding.imgMovie
@@ -15,7 +16,9 @@ class MovieViewHolder(private val context: Context,private val binding: ResMovie
         Glide.with(context).load("https://image.tmdb.org/t/p/w342${movie.poster_path}").into(imageView)
 
         imageView.setOnClickListener(){
-            Toast.makeText(context, movie.title, Toast.LENGTH_LONG).show()
+
+            listener.onClick(movie.id)
+
         }
 
     }

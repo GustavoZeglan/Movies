@@ -89,36 +89,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         for (i in 0 until moviesList.count()) {
 
-            val adult = moviesList[i].adult
-            val backdrop_path = moviesList[i].backdrop_path
-            val genre_ids = moviesList[i].genre_ids
             val id = moviesList[i].id
-            val original_language = moviesList[i].original_language
-            val original_title = moviesList[i].original_title
-            val overview = moviesList[i].overview
-            val popularity = moviesList[i].popularity
             val poster_path = moviesList[i].poster_path
-            val release_date = moviesList[i].release_date
             val title = moviesList[i].title
-            val video = moviesList[i].video
-            val vote_average = moviesList[i].vote_average
-            val vote_count = moviesList[i].vote_count
 
             val movie = MovieListModel.MovieModel(
-                adult = adult,
-                backdrop_path = backdrop_path,
-                genre_ids = genre_ids,
                 id = id,
-                original_language = original_language,
-                original_title = original_title,
-                overview = overview,
-                popularity = popularity,
                 poster_path = poster_path,
-                release_date = release_date,
                 title = title,
-                video = video,
-                vote_average = vote_average,
-                vote_count = vote_count,
             )
 
             moviesArray.add(movie)
