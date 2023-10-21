@@ -42,7 +42,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         viewModel.movie.observe(this, Observer {
             binding.textTitle.text = it.title
             val imageView = binding.imgMoviePoster
-            Glide.with(applicationContext).load("https://image.tmdb.org/t/p/w342${it.poster_path}").into(imageView)
+            Glide.with(applicationContext).load("https://image.tmdb.org/t/p/w780${it.backdrop_path}").into(imageView)
         })
 
     }

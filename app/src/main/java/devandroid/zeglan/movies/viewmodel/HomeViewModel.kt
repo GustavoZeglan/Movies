@@ -9,9 +9,8 @@ import devandroid.zeglan.movies.server.model.GenreListModel
 import devandroid.zeglan.movies.server.model.MovieListModel
 import devandroid.zeglan.movies.server.repository.remote.GenreRepository
 import devandroid.zeglan.movies.server.repository.remote.MovieRepository
-import java.lang.Exception
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val movieRepository = MovieRepository(application.applicationContext)
     private val genreRepository = GenreRepository(application.applicationContext)
@@ -42,7 +41,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun filteredMovies(genre: String, genreId: String) {
 
-        movieRepository.getFilteredMovies(genreId,"pt-br", object : APIListener<MovieListModel> {
+        val page: Int = (1..6).random()
+
+        movieRepository.getFilteredMovies(genreId,"pt-br", page, object : APIListener<MovieListModel> {
 
             override fun onSuccess(result: MovieListModel) {
 
@@ -127,7 +128,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return genreArray
 
     }
-
 
 }
 

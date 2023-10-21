@@ -13,10 +13,10 @@ data class MovieListModel(
         val id: Int = 0,
 
         @SerializedName("poster_path")
-        val poster_path: String = "",
+        val poster_path: String? = "",
 
         @SerializedName("title")
-        val title: String = "",
+        val title: String? = "",
 
     )
 }

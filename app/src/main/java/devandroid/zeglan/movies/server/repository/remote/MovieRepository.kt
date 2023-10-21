@@ -32,8 +32,8 @@ class MovieRepository(val context: Context) : BaseRepository(){
 
     }
 
-    fun getFilteredMovies(genres: String, language: String, listener: APIListener<MovieListModel>){
-        val call = remote.getFilteredMovies(genres,language)
+    fun getFilteredMovies(genres: String, language: String, page: Int, listener: APIListener<MovieListModel>){
+        val call = remote.getFilteredMovies(genres,language, page)
 
         call.enqueue( object : Callback<MovieListModel> {
             override fun onResponse(

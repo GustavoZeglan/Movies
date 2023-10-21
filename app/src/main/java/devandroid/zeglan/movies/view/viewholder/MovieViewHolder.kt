@@ -12,8 +12,11 @@ class MovieViewHolder(private val context: Context,private val binding: ResMovie
 
     fun bindData(movie: MovieListModel.MovieModel) {
         val imageView = binding.imgMovie
-//        Glide.with(context).load("https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg").into(imageView)
-        Glide.with(context).load("https://image.tmdb.org/t/p/w342${movie.poster_path}").into(imageView)
+        if(movie.poster_path != "") {
+            Glide.with(context).load("https://image.tmdb.org/t/p/w342${movie.poster_path}").into(imageView)
+        } else {
+            Glide.with(context).load("https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg").into(imageView)
+        }
 
         imageView.setOnClickListener(){
 

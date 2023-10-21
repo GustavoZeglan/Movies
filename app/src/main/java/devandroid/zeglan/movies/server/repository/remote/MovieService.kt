@@ -13,7 +13,8 @@ interface MovieService {
     fun getPopularMovies() : Call<MovieListModel>
 
     @GET("discover/movie")
-    fun getFilteredMovies(@Query("with_genres") genres: String, @Query("language") language: String)
+    fun getFilteredMovies(@Query("with_genres") genres: String, @Query("language") language: String,
+                          @Query("page") page: Int, @Query("sort_by") sort: String? = "popularity.desc")
     : Call<MovieListModel>
 
     @GET("https://api.themoviedb.org/3/movie/{movieId}")
