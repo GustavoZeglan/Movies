@@ -2,6 +2,7 @@ package devandroid.zeglan.movies.server.repository.remote
 
 import android.content.Context
 import devandroid.zeglan.movies.server.listener.APIListener
+import devandroid.zeglan.movies.server.model.MovieDetailModel
 import devandroid.zeglan.movies.server.model.MovieListModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,8 +32,8 @@ class MovieRepository(val context: Context) : BaseRepository(){
 
     }
 
-    fun getFilteredMovies(genres: String, language: String, listener: APIListener<MovieListModel>){
-        val call = remote.getFilteredMovies(genres,language)
+    fun getFilteredMovies(genres: String, language: String, page: Int, listener: APIListener<MovieListModel>){
+        val call = remote.getFilteredMovies(genres,language, page)
 
         call.enqueue( object : Callback<MovieListModel> {
             override fun onResponse(
@@ -51,5 +52,24 @@ class MovieRepository(val context: Context) : BaseRepository(){
 
     }
 
+    fun getMovieDetail(movieId: Int, listener: APIListener<MovieDetailModel>) {
+
+        val call = remote.getMovieDetail(movieId)
+
+        call.enqueue( object : Callback<MovieDetailModel> {
+            override fun onResponse(
+                call: Call<MovieDetailModel>,
+                response: Response<MovieDetailModel>,
+            ) {
+                handleResponse(response,listener)
+            }
+
+            override fun onFailure(call: Call<MovieDetailModel>, t: Throwable) {
+                listener.onFailure("Ocorreu um erro inesperado.")
+            }
+
+        })
+
+    }
 
 }
