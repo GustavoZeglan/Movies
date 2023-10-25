@@ -2,7 +2,9 @@ package devandroid.zeglan.movies.server.repository.remote
 
 import android.content.Context
 import devandroid.zeglan.movies.server.listener.APIListener
+import devandroid.zeglan.movies.server.model.CreditsModel
 import devandroid.zeglan.movies.server.model.MovieDetailModel
+import devandroid.zeglan.movies.server.model.MovieImages
 import devandroid.zeglan.movies.server.model.MovieListModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -67,6 +69,43 @@ class MovieRepository(val context: Context) : BaseRepository(){
             override fun onFailure(call: Call<MovieDetailModel>, t: Throwable) {
                 listener.onFailure("Ocorreu um erro inesperado.")
             }
+
+        })
+
+    }
+
+
+    fun getMovieImages(movieId: Int, listener: APIListener<MovieImages>) {
+
+        val call = remote.getMovieImages(movieId)
+
+        call.enqueue( object : Callback<MovieImages> {
+
+            override fun onResponse(call: Call<MovieImages>, response: Response<MovieImages>) {
+                handleResponse(response,listener)
+            }
+
+            override fun onFailure(call: Call<MovieImages>, t: Throwable) {
+                listener.onFailure("Ocorreu um erro inesperado.")
+            }
+
+        })
+
+    }
+
+    fun getMovieCredits(movieId: Int, listener: APIListener<CreditsModel>) {
+
+        val call = remote.getCredits(movieId)
+
+        call.enqueue( object : Callback<CreditsModel> {
+            override fun onResponse(call: Call<CreditsModel>, response: Response<CreditsModel>) {
+                handleResponse(response,listener)
+            }
+
+            override fun onFailure(call: Call<CreditsModel>, t: Throwable) {
+                listener.onFailure("Ocorreu um erro inesperado.")
+            }
+
 
         })
 

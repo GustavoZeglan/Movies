@@ -1,6 +1,8 @@
 package devandroid.zeglan.movies.server.repository.remote
 
+import devandroid.zeglan.movies.server.model.CreditsModel
 import devandroid.zeglan.movies.server.model.MovieDetailModel
+import devandroid.zeglan.movies.server.model.MovieImages
 import devandroid.zeglan.movies.server.model.MovieListModel
 import retrofit2.Call
 import retrofit2.http.GET
@@ -20,5 +22,13 @@ interface MovieService {
     @GET("https://api.themoviedb.org/3/movie/{movieId}")
     fun getMovieDetail(@Path("movieId") id: Int, @Query("language") language: String  = "pt-br")
     : Call<MovieDetailModel>
+
+    @GET("https://api.themoviedb.org/3/movie/{movieId}/images")
+    fun getMovieImages(@Path("movieId") id: Int, @Query("include_image_language") language: String = "pt")
+    : Call<MovieImages>
+
+    @GET("https://api.themoviedb.org/3/movie/{movieId}/credits")
+    fun getCredits(@Path("movieId") id: Int, @Query("include_image_language") language: String = "pt")
+    : Call<CreditsModel>
 
 }

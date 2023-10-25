@@ -1,12 +1,12 @@
 package devandroid.zeglan.movies.view
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import devandroid.zeglan.movies.databinding.FragmentHomeBinding
 import devandroid.zeglan.movies.server.model.GenreListModel
@@ -38,13 +38,9 @@ class HomeFragment : Fragment(){
         val listener = object : OnMovieListener {
             override fun onClick(movieId: Int) {
 
-                val screen = Intent(context, MovieDetailsActivity::class.java)
+                val action = HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(movieId)
+                findNavController().navigate(action)
 
-                val bundle = Bundle()
-                bundle.putInt("movieId", movieId)
-                screen.putExtras(bundle)
-
-                startActivity(screen)
             }
         }
 
@@ -53,7 +49,6 @@ class HomeFragment : Fragment(){
 
         getFilteredMovies(GenreListMock.list)
         observe()
-
 
         return binding.root
     }

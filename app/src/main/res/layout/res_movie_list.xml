@@ -9,9 +9,24 @@
     android:paddingVertical="12dp"
     android:orientation="vertical">
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:layout_marginTop="4dp"
+            android:layout_width="124dp"
+            android:layout_height="24dp"
+            android:background="@color/grey"/>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <TextView
         android:id="@+id/text_genre"
         android:text="Genêro"
+        android:fontFamily="@font/roboto_regular"
         android:textSize="24sp"
         android:paddingBottom="6dp"
         android:layout_width="wrap_content"

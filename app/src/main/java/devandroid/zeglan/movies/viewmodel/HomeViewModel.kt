@@ -41,7 +41,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun filteredMovies(genre: String, genreId: String) {
 
-        val page: Int = (1..6).random()
+        val page: Int = (1..4).random()
 
         movieRepository.getFilteredMovies(genreId,"pt-br", page, object : APIListener<MovieListModel> {
 

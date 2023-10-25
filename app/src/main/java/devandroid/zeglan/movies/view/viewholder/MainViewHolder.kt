@@ -1,5 +1,6 @@
 package devandroid.zeglan.movies.view.viewholder
 
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -16,6 +17,8 @@ class MainViewHolder(private val binding: ResMovieListBinding, private val liste
                 val movieAdapter = MovieAdapter(movie.list, listener)
                 binding.movieRecyclerView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL,false)
                 binding.movieRecyclerView.adapter = movieAdapter
+                binding.shimmer.stopShimmer()
+                binding.shimmer.isVisible = false
         }
 
 }

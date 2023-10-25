@@ -3,6 +3,7 @@ package devandroid.zeglan.movies.view.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import devandroid.zeglan.movies.databinding.ResMovieListBinding
 import devandroid.zeglan.movies.server.model.MovieListModel

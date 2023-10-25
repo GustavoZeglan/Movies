@@ -12,7 +12,7 @@ object GenreListMock {
                 GenreListModel.GenreModel("Animação", "16"),//2300
                 GenreListModel.GenreModel("Comédia", "35"),//6079
                 GenreListModel.GenreModel("Crime", "80"),//1500
-                GenreListModel.GenreModel("Documentário", "99"),//6800
+                //GenreListModel.GenreModel("Documentário", "99"),//6800
                 GenreListModel.GenreModel("Drama", "18"),//9900
                 GenreListModel.GenreModel("Família", "10751"),//1100
                 GenreListModel.GenreModel("Fantasia", "14"),//946
