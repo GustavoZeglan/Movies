@@ -15,7 +15,6 @@ import devandroid.zeglan.movies.view.adapter.MainAdapter
 import devandroid.zeglan.movies.view.listener.OnMovieListener
 import devandroid.zeglan.movies.viewmodel.HomeViewModel
 
-
 class HomeFragment : Fragment(){
 
     private lateinit var viewModel: HomeViewModel
@@ -70,11 +69,16 @@ class HomeFragment : Fragment(){
     }
 
     private fun getFilteredMovies(genresList: List<GenreListModel.GenreModel>) {
-        for (i in 0 until genresList.count()) {
-            val genreId = genresList[i].id
-            val genreName = genresList[i].name
+        if(viewModel.canGetMovies.value!!) {
+            for (i in 0 until genresList.count()) {
+                val genreId = genresList[i].id
+                val genreName = genresList[i].name
 
-            viewModel.filteredMovies(genreId,genreName)
+                viewModel.filteredMovies(genreId,genreName)
+            }
+
+            viewModel.switchLoadMovies(false)
+
         }
     }
 

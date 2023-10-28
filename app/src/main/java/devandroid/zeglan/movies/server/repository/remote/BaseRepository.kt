@@ -14,7 +14,7 @@ open class BaseRepository {
         if(response.code() == 200) {
             response.body()?.let { listener.onSuccess(it) }
         }else {
-            listener.onFailure(failResponse(response.errorBody()!!.string()))
+            listener.onFailure(response.errorBody().toString())
         }
     }
 

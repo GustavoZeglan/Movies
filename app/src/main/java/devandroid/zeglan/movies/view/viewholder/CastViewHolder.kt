@@ -14,7 +14,7 @@ class CastViewHolder(val context: Context, val binding: ResPersonBinding) : View
 
 
         Glide.with(context).load("https://image.tmdb.org/t/p/w342${person.image}").into(binding.imagePerson)
-        binding.txtName.text = person.character
+        binding.txtName.text = person.name
 
         binding.personShimmer.stopShimmer()
     }

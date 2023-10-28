@@ -1,11 +1,14 @@
 package devandroid.zeglan.movies.server.repository.remote
 
 import android.content.Context
+import android.provider.SyncStateContract.Constants
 import devandroid.zeglan.movies.server.listener.APIListener
 import devandroid.zeglan.movies.server.model.CreditsModel
 import devandroid.zeglan.movies.server.model.MovieDetailModel
 import devandroid.zeglan.movies.server.model.MovieImages
 import devandroid.zeglan.movies.server.model.MovieListModel
+import devandroid.zeglan.movies.server.model.PostWatchList
+import devandroid.zeglan.movies.server.model.ResponseWatchList
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,6 +16,7 @@ import retrofit2.Response
 class MovieRepository(val context: Context) : BaseRepository(){
 
     private val remote = RetrofitClient.getService(MovieService::class.java)
+    private val accountId = devandroid.zeglan.movies.Constants.ACCOUNTID
 
     fun getPopularMovies(listener: APIListener<MovieListModel>){
         val call = remote.getPopularMovies()
@@ -110,5 +114,48 @@ class MovieRepository(val context: Context) : BaseRepository(){
         })
 
     }
+
+    fun getWatchList(listener: APIListener<MovieListModel>) {
+
+        val call = remote.getWatchList()
+
+        call.enqueue( object : Callback<MovieListModel> {
+            override fun onResponse(
+                call: Call<MovieListModel>,
+                response: Response<MovieListModel>,
+            ) {
+                handleResponse(response,listener)
+            }
+
+            override fun onFailure(call: Call<MovieListModel>, t: Throwable) {
+                listener.onFailure("Ocorreu um erro inesperado.")
+            }
+
+        })
+
+    }
+
+    fun addOrRemoveMovieFromWatchList(mediaType: String, mediaId: Int, watchlist: Boolean,listener: APIListener<ResponseWatchList>) {
+
+        val post = PostWatchList(mediaType,mediaId,watchlist)
+
+        val call = remote.addOrRemoveMovieFromWatchList(accountId,post)
+
+        call.enqueue( object : Callback<ResponseWatchList> {
+            override fun onResponse(
+                call: Call<ResponseWatchList>,
+                response: Response<ResponseWatchList>,
+            ) {
+                handleResponse(response,listener)
+            }
+
+            override fun onFailure(call: Call<ResponseWatchList>, t: Throwable) {
+                listener.onFailure("Ocorreu um erro inesperado.")
+            }
+
+        })
+
+    }
+
 
 }

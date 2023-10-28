@@ -15,6 +15,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val movieRepository = MovieRepository(application.applicationContext)
     private val genreRepository = GenreRepository(application.applicationContext)
 
+    private var _canGetMovies: MutableLiveData<Boolean> = MutableLiveData<Boolean>(true)
+    var canGetMovies: LiveData<Boolean> = _canGetMovies
+
+
     private var _movieListWithGenre = MutableLiveData<MutableList<MovieListModel>>()
     var movieListWithGenre: LiveData<MutableList<MovieListModel>> = _movieListWithGenre
 
@@ -127,6 +131,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
         return genreArray
 
+    }
+
+    fun switchLoadMovies(can: Boolean) {
+        _canGetMovies.value = can
     }
 
 }

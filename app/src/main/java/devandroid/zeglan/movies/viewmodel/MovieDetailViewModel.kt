@@ -4,10 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import devandroid.zeglan.movies.R
 import devandroid.zeglan.movies.server.listener.APIListener
 import devandroid.zeglan.movies.server.model.CreditsModel
 import devandroid.zeglan.movies.server.model.MovieDetailModel
 import devandroid.zeglan.movies.server.model.MovieImages
+import devandroid.zeglan.movies.server.model.MovieListModel
+import devandroid.zeglan.movies.server.model.ResponseWatchList
 import devandroid.zeglan.movies.server.repository.remote.MovieRepository
 
 class MovieDetailViewModel(application: Application) : AndroidViewModel(application) {
@@ -23,11 +26,14 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
     private val _cast: MutableLiveData<List<CreditsModel.People>> = MutableLiveData<List<CreditsModel.People>>()
     val cast: LiveData<List<CreditsModel.People>> = _cast
 
-    //private var _posterImage: MutableLiveData<String> = MutableLiveData<String>()
-    //var posterImage: LiveData<String> = _posterImage
+    private val _watchlist: MutableLiveData<List<MovieListModel.MovieModel>> = MutableLiveData<List<MovieListModel.MovieModel>>()
+    val watchlist: LiveData<List<MovieListModel.MovieModel>> = _watchlist
 
-//    private var _movieId: MutableLiveData<Int> = MutableLiveData<Int>()
-//    var movieId: LiveData<Int> = _movieId
+    private val _isUpdated: MutableLiveData<String> = MutableLiveData<String>()
+    val isUpdated: LiveData<String> = _isUpdated
+
+    private val _movieIsInWatchList: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val movieIsInWatchList: LiveData<Boolean> = _movieIsInWatchList
 
     fun getMovieDetail(movieId: Int) {
 
@@ -72,20 +78,41 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
         })
     }
 
-//    fun getBestPosterImage(){
-//
-//        var movieImage: MovieImages.MovieImage =
-//            MovieImages.MovieImage(0,"",0.0,0.0)
-//
-//        for (i in _movieImages.value!!.posters) {
-//
-//            if(i.height > movieImage.height && i.voteAverage >= movieImage.voteAverage && i.voteCount >= movieImage.voteCount) {
-//                movieImage = i
-//            }
-//
-//        }
-//
-//        _posterImage.value = movieImage.filePath
-//    }
+    fun getWatchList() {
+        remote.getWatchList( object : APIListener<MovieListModel> {
+
+            override fun onSuccess(result: MovieListModel) {
+                _watchlist.value = result.list
+            }
+
+            override fun onFailure(message: String) {
+                val s = ""
+            }
+
+        })
+    }
+
+    fun addOrRemoveMovieFromWatchList(mediaType: String, mediaId: Int, watchlist: Boolean) {
+        remote.addOrRemoveMovieFromWatchList(mediaType, mediaId, watchlist, object : APIListener<ResponseWatchList> {
+            override fun onSuccess(result: ResponseWatchList) {
+                _isUpdated.value = result.status_message
+            }
+
+            override fun onFailure(message: String) {
+                val s = ""
+            }
+
+        })
+    }
+
+    fun verifyIfMovieIsInWatchList(movieId: Int) : Boolean {
+        val watchListFiltered = watchlist.value!!.filter { it.id == movieId}
+        _movieIsInWatchList.value = watchListFiltered.isNotEmpty()
+        return _movieIsInWatchList.value!!
+    }
+
+    fun switchMovieIsInWatchList(bool: Boolean) {
+        _movieIsInWatchList.value = bool
+    }
 
 }
